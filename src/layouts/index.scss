@@ -1,0 +1,18 @@
+.page_layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  &__header {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+
+  &__footer {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+}
