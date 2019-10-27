@@ -1,6 +1,7 @@
 import React from "react";
 import './index.scss';
 import {Post} from "@/data/post";
+import Link from 'umi/link';
 
 interface PostItemComponentProps {
   post: Post
@@ -29,7 +30,7 @@ class PostItemComponent extends React.Component<PostItemComponentProps, PostItem
     return (
       <div className='post-item-component'>
         <h1 className='post-item-component__title'>
-          <a href="#">{post.title}</a>
+          <Link to={`/post/${post.id}`}>{post.title}</Link>
         </h1>
         <p className='post-item-component__content'>
           {post.content}

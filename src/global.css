@@ -6,10 +6,6 @@ body {
   margin: 0;
 }
 
-h2 {
-  margin: 0;
-  background: black;
-}
 
 .item-enter {
   opacity: 0;
@@ -28,4 +24,4 @@ h2 {
 }
 
 
-html::-webkit-scrollbar { width: 0 !important }
+/*html::-webkit-scrollbar { width: 0 !important }*/
