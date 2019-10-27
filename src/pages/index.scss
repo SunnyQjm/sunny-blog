@@ -1,0 +1,25 @@
+.index-page {
+  display: flex;
+  //align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  &__person-card {
+    background: white;
+    border-radius: 10px;
+    margin-right: 30px;
+    @media (min-width: 1200px) {
+      width: 200px;
+    }
+    @media (min-width: 1600px) {
+      width: 250px;
+    }
+    max-height: 400px;
+    flex-shrink: 0;
+  }
+  &__post-content-wrapper {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 1500px;
+  }
+}

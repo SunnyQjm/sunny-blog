@@ -19,3 +19,13 @@
     width: 80%;
   }
 }
+
+@keyframes width-scale-show {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}

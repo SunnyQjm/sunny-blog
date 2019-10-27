@@ -32,7 +32,10 @@ const BasicLayout: React.FC = props => {
         {props.children}
       </div>
       <div className='page_layout__footer'>
-        footer
+        <div className='page_layout__footer-wrapper'>
+          <div>© 2018 – 2019  建明 | Ming.J</div>
+          {/*<div>Powered by Hexo v3.8.0 | Theme – NexT.Mist v7.1.0</div>*/}
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,37 @@
+@import "../../scss/animation";
+
+.post-item-component {
+  color: #555;
+  margin-bottom: 50px;
+  &__title {
+    position: relative;
+    display: inline-block;
+    font-size: 26px;
+    &:hover{
+      color: #555;
+      &::after {
+        content: '';
+        background: #555;
+        height: 2px;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        animation: width-scale-show 0.3s;
+      }
+    }
+  }
+
+  &__content {
+    font-size: 16px;
+    line-height: 2;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #555;
+  &:hover{
+    color: #555;
+  }
+}

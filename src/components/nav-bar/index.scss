@@ -3,12 +3,23 @@
 .nav-bar-component {
   display: flex;
   align-items: center;
-  padding: 20px 50px;
-  background: #f5f5f5;
+  justify-content: center;
+  padding: 30px 50px;
+  background: white;
 
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    @media (min-width: 1200px) {
+      width: 1080px;
+    }
+    @media (min-width: 1600px) {
+      width: 1230px;
+    }
+  }
   &__title {
     position: relative;
-    margin-right: 30px;
+    margin-right: 100px;
     &::before {
       content: '';
       background: #222;

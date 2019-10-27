@@ -47,12 +47,14 @@ class NavBarComponent extends React.Component<NavBarComponentProps, NavBarCompon
     });
     return (
       <div className='nav-bar-component'>
-        <span className='nav-bar-component__title'>
+        <div className='nav-bar-component__wrapper'>
+          <span className='nav-bar-component__title'>
           {title}
         </span>
 
-        <div className='nav-bar-component__menu'>
-          {menus}
+          <div className='nav-bar-component__menu'>
+            {menus}
+          </div>
         </div>
       </div>
     );
