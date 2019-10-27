@@ -182,11 +182,22 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
       '![运行效果](https://upload-images.jianshu.io/upload_images/7222676-22f91307d9b68b00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)\n';
     return (
       <div className='post-page'>
-        <ReactMarkdown
-          source={input}
-          className='markdown-body'
-          renderers={{code: CodeRenderComponent}}
-        />
+        <article className='post-page__post'>
+          <header className='post-page__post-title'>
+            Header
+          </header>
+          <div className='post-page__post-content'>
+
+            <ReactMarkdown
+              source={input}
+              className='markdown-body'
+              renderers={{code: CodeRenderComponent}}
+            />
+          </div>
+        </article>
+        <div className='post-page__right-slide'>
+          222
+        </div>
       </div>
     );
   }

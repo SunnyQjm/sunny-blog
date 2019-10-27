@@ -2,7 +2,32 @@
 @import "~highlight.js/scss/github-gist";
 
 .post-page {
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: flex-start;
+
+  &__post {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 900px;
+    flex-grow: 0;
+    &-title {
+
+    }
+    &-content {
+
+    }
+  }
+
+  &__right-slide {
+    flex-grow: 1;
+    flex-shrink: 0;
+    margin-left: 30px;
+    min-height: 10px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+  }
 }
