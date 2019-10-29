@@ -25,7 +25,7 @@ const menu = [
 ];
 
 
-interface BasicLayoutProps extends RouterTypes{
+interface BasicLayoutProps extends RouterTypes {
 
 }
 
@@ -45,6 +45,13 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   }
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    if (this.props.location.pathname.startsWith('/admin')) {
+      return (
+        <div>
+          {this.props.children}
+        </div>
+      );
+    }
     return (
       <div className='page_layout'>
         <div className='page_layout__header'>
@@ -55,7 +62,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         </div>
         <div className='page_layout__footer'>
           <div className='page_layout__footer-wrapper'>
-            <div>© 2018 – 2019  建明 | Ming.J</div>
+            <div>© 2018 – 2019 建明 | Ming.J</div>
             {/*<div>Powered by Hexo v3.8.0 | Theme – NexT.Mist v7.1.0</div>*/}
           </div>
         </div>

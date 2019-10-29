@@ -1,0 +1,38 @@
+.admin-layout {
+  min-height: 100vh;
+
+  &__slider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+  }
+
+  &__header {
+    background: white;
+    padding: 0 30px;
+    //position: fixed;
+    //z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+
+    &_avatar {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    &_username {
+      margin-left: 10px;
+    }
+  }
+
+  &__content {
+    margin: 24px 16px 0;
+  }
+
+  &__footer {
+    text-align: center;
+  }
+}
