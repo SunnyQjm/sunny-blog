@@ -7,18 +7,20 @@ import {
   Avatar,
   Dropdown
 } from 'antd';
+import RouterTypes from "umi/routerTypes";
+import withRouter from 'umi/withRouter';
+import {SelectParam} from "antd/es/menu";
+import router from 'umi/router';
 
-const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
 
-interface AdminLayoutProps {
+interface AdminLayoutProps extends RouterTypes {
 
 }
 
 interface AdminLayoutState {
   collapsed: boolean
 }
-
 
 
 /**
@@ -31,13 +33,18 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
       collapsed: false,
     };
     this.onCollapse = this.onCollapse.bind(this);
+    this.onMenuSelected = this.onMenuSelected.bind(this);
   }
 
 
   onCollapse(collapsed: boolean) {
-    console.log(collapsed);
     this.setState({collapsed});
   };
+
+  onMenuSelected(param: SelectParam) {
+    console.log(param);
+    router.replace(param.key);
+  }
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
     const {
@@ -59,23 +66,23 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
           onCollapse={this.onCollapse}
           className='admin-layout__slider'
         >
-          <div className="logo"/>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-            <Menu.Item key="1">
-              <Icon type="user"/>
-              <span className="nav-text">nav 1</span>
+          <div className="admin-layout__slider_logo">
+            <span className='admin-layout__slider__title'>
+                {'建明 | Ming.J'}
+              </span>
+          </div>
+          <Menu theme="dark" mode="inline" selectedKeys={[this.props.location.pathname]} onSelect={this.onMenuSelected}>
+            <Menu.Item key="/admin/edit">
+              <Icon type="edit"/>
+              <span className="nav-text">写博客</span>
             </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera"/>
-              <span className="nav-text">nav 2</span>
+            <Menu.Item key="/admin/post-manager">
+              <Icon type="unordered-list"/>
+              <span className="nav-text">博客管理</span>
             </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload"/>
-              <span className="nav-text">nav 3</span>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="user"/>
-              <span className="nav-text">nav 4</span>
+            <Menu.Item key="/admin/comment-manager">
+              <Icon type="message"/>
+              <span className="nav-text">评论管理</span>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -105,4 +112,4 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
   }
 }
 
-export default AdminLayout
+export default withRouter(AdminLayout);

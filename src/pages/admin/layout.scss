@@ -1,11 +1,49 @@
 .admin-layout {
   min-height: 100vh;
 
+
   &__slider {
     overflow: auto;
     height: 100vh;
     position: fixed;
     left: 0;
+
+    &_logo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+    &__title {
+      position: relative;
+      color: white;
+      &::before {
+        content: '';
+        background: white;
+        height: 2px;
+        width: 80%;
+        position: absolute;
+        top: -3px;
+        right: 10%;
+        animation: width-show 1s;
+      }
+
+      &::after {
+        content: '';
+        background: white;
+        height: 2px;
+        width: 80%;
+        position: absolute;
+        bottom: -5px;
+        left: 10%;
+        animation: width-show 1s;
+      }
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      animation: fadeInDown 1s;
+    }
   }
 
   &__header {

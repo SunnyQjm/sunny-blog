@@ -8,7 +8,7 @@ import RouterTypes from "umi/routerTypes";
 import withRouter from 'umi/withRouter';
 
 
-interface NavBarComponentProps extends RouterTypes{
+interface NavBarComponentProps extends RouterTypes {
   title: string,
   menu: {
     url: string,
@@ -39,7 +39,9 @@ class NavBarComponent extends React.Component<NavBarComponentProps, NavBarCompon
     } = this.props;
     const menus = menu.map(item => {
       return (
-        <Link to={item.url} className={`nav-bar-component__menu-item ${(location && location.pathname == item.url) ? 'nav-bar-component__menu-item--active' : ''}`} key={item.url + item.value}>
+        <Link to={item.url}
+              className={`nav-bar-component__menu-item ${(location && location.pathname == item.url) ? 'nav-bar-component__menu-item--active' : ''}`}
+              key={item.url + item.value}>
           <Icon type={item.icon} theme='filled' style={{marginRight: '5px'}}/>
           {item.value}
         </Link>
@@ -50,7 +52,7 @@ class NavBarComponent extends React.Component<NavBarComponentProps, NavBarCompon
         <div className='nav-bar-component__wrapper'>
           <span className='nav-bar-component__title'>
           {title}
-        </span>
+          </span>
 
           <div className='nav-bar-component__menu'>
             {menus}
