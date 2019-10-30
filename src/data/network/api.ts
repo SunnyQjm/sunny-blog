@@ -2,11 +2,13 @@ import axios from 'axios';
 import {BaseResponseBody} from "@/data/interface/response.interface";
 import {StatusCode} from "@/data/network/status-code";
 import {User} from "@/data/user";
+import router from "umi/router";
 
 export const API = {
   INFO: {
     login: '/login',
-    register: '/register'
+    register: '/register',
+    getUserInfo: '/admin/getUserInfo',
   },
   global: {
     token: ''
@@ -16,25 +18,25 @@ export const API = {
     if (config.headers) {
       config.headers = {
         'Content-Type': 'application/json',
-        // 'authorization': `Bearer ${API.global.token}`,
+        'authorization': `Bearer ${API.global.token}`,
         ...config.headers,
       }
     } else {
       config.headers = {
         'Content-Type': 'application/json',
-        // 'authorization': `Bearer ${API.global.token}`
+        'authorization': `Bearer ${API.global.token}`
       }
     }
     let requestPromise;
     switch (type.trim().toLowerCase()) {
       case 'get':
-        requestPromise = axios.get(url, {
+        requestPromise = axios.get(`/api${url}`, {
           params: data,
           ...config,
         });
         break;
       case 'post':
-        requestPromise = axios.post(url, data, config);
+        requestPromise = axios.post(`/api${url}`, data, config);
         break;
       case 'put':
         break;
@@ -54,10 +56,11 @@ export const API = {
             case StatusCode.SUCCESS:
               break;
             case StatusCode.NEED_ADMIN_PERMISSION:
-              break;
             case StatusCode.COMMENT_ERROR:
-              break;
             case StatusCode.NEED_LOGIN:
+              break;
+            case StatusCode.UN_AUTHORIZED:
+              router.replace('/login');
               break;
           }
           if(responseData.statusCode === StatusCode.SUCCESS) {
@@ -70,7 +73,7 @@ export const API = {
 
     return Promise.reject('请求类型不对');
   },
-  easyGet<T>(url: string, data: any, config: any = {}): Promise<T> {
+  easyGet<T>(url: string, data: any = null, config: any = {}): Promise<T> {
     return API.easyRequest<T>('get', url, data, config);
   },
   eastPost<T>(url: string, data: any, config: any = {}): Promise<T> {
@@ -80,11 +83,24 @@ export const API = {
   ////////////////////////////////////////////////////////////
   ///////// 用户相关接口
   ////////////////////////////////////////////////////////////
+  /**
+   * 登录
+   * @param username
+   * @param password
+   */
   login: (username: string, password: string): Promise<User> => {
-    return API.eastPost<User>('/api/login', {
+    return API.eastPost<User>(API.INFO.login, {
       username,
       password
     })
+  },
+
+  /**
+   * 获取用户信息
+   */
+  getUserInfo: (): Promise<User> => {
+    return API.easyGet<User>(API.INFO.getUserInfo);
   }
+
 };
 

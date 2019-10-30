@@ -43,21 +43,36 @@ export default {
     * init(action: Action<any>, operators: Operators) {
       const user = yield LocalStorageManager.getObj(LocalStorageKeys.USER);
       if(user) {
+        API.global.token = user.access_token;
         yield operators.put({
           type: 'updateUser',
           data: user
+        });
+
+        // 获取网上的用户信息
+        yield operators.put({
+          type: 'getUserInfo',
         });
       } else {      // 没有登录则跳转到登录页
         router.replace('/login');
       }
     },
-    * login(action: Action<any>, operators: Operators) {
-      const result: User = yield operators.call(API.login, action.data.username, action.data.password);
+    * getUserInfo(action: Action<any>, operators: Operators) {
+      const user = yield operators.call(API.getUserInfo);
+      API.global.token = user.access_token;
       yield operators.put({
         type: 'updateUser',
-        data: result
+        data: user
       });
-      LocalStorageManager.save(LocalStorageKeys.USER, result);
+    },
+    * login(action: Action<any>, operators: Operators) {
+      const user: User = yield operators.call(API.login, action.data.username, action.data.password);
+      API.global.token = user.access_token;
+      yield operators.put({
+        type: 'updateUser',
+        data: user
+      });
+      LocalStorageManager.save(LocalStorageKeys.USER, user);
       router.replace('/admin');
     }
   }

@@ -3,4 +3,5 @@ export const StatusCode = {
   COMMENT_ERROR: -1,            // 通用错误
   NEED_LOGIN: -2,               // 需要登录
   NEED_ADMIN_PERMISSION: -3,    // 需要管理员权限
+  UN_AUTHORIZED: 401,           // 未授权
 };

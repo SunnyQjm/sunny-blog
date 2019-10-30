@@ -5,4 +5,5 @@ export class User {
   avatar: string = '';
   nickName: string = '';
   age: number = 0;
+  access_token: string = '';
 }
