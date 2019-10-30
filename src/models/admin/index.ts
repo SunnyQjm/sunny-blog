@@ -2,8 +2,9 @@ import {Action, Operators} from "@/data/interface/dva.interface";
 import {API} from "@/data/network/api";
 import {User} from "@/data/user";
 import router from 'umi/router';
-import {} from 'antd'
+import {message} from 'antd'
 import {LocalStorageKeys, LocalStorageManager} from "@/manager/storage.manager";
+import {CreatePostParam} from "@/data/param/request.param";
 
 export interface AdminModelState {
   user: User,
@@ -22,6 +23,9 @@ export default {
      * @param action
      */
     updateUser(state: any, action: Action<User>) {
+      if(action.data && action.data.access_token) {
+        API.global.token = action.data.access_token;
+      }
       return {
         ...state,
         user: action.data
@@ -43,7 +47,6 @@ export default {
     * init(action: Action<any>, operators: Operators) {
       const user = yield LocalStorageManager.getObj(LocalStorageKeys.USER);
       if(user) {
-        API.global.token = user.access_token;
         yield operators.put({
           type: 'updateUser',
           data: user
@@ -59,7 +62,6 @@ export default {
     },
     * getUserInfo(action: Action<any>, operators: Operators) {
       const user = yield operators.call(API.getUserInfo);
-      API.global.token = user.access_token;
       yield operators.put({
         type: 'updateUser',
         data: user
@@ -67,13 +69,17 @@ export default {
     },
     * login(action: Action<any>, operators: Operators) {
       const user: User = yield operators.call(API.login, action.data.username, action.data.password);
-      API.global.token = user.access_token;
       yield operators.put({
         type: 'updateUser',
         data: user
       });
       LocalStorageManager.save(LocalStorageKeys.USER, user);
       router.replace('/admin');
+    },
+
+    * createPost(action: Action<CreatePostParam>, operators: Operators) {
+      yield operators.call(API.createPost, action.data);
+      message.info('发表成功');
     }
   }
 }

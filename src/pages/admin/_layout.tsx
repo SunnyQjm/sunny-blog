@@ -38,7 +38,11 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
     this.onCollapse = this.onCollapse.bind(this);
     this.onMenuSelected = this.onMenuSelected.bind(this);
   }
-
+  componentDidMount(): void {
+    this.props.dispatch({
+      type: 'admin/init'
+    });
+  }
 
   onCollapse(collapsed: boolean) {
     this.setState({collapsed});

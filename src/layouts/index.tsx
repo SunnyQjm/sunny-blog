@@ -42,9 +42,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   componentDidMount(): void {
     console.log('global layout mount');
-    this.props.dispatch({
-      type: 'admin/init'
-    });
+    // this.props.dispatch({
+    //   type: 'admin/init'
+    // });
   }
 
   componentDidUpdate(prevProps: any) {

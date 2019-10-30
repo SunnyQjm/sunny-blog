@@ -3,12 +3,14 @@ import {BaseResponseBody} from "@/data/interface/response.interface";
 import {StatusCode} from "@/data/network/status-code";
 import {User} from "@/data/user";
 import router from "umi/router";
+import {CreatePostParam} from "@/data/param/request.param";
 
 export const API = {
   INFO: {
     login: '/login',
     register: '/register',
     getUserInfo: '/admin/getUserInfo',
+    createPost: '/admin/create-post',
   },
   global: {
     token: ''
@@ -46,11 +48,9 @@ export const API = {
     if (requestPromise) {
       return requestPromise
         .then((result: any) => {
-          console.log(result);
           return result.data;
         })
         .then((responseData: BaseResponseBody<T>) => {
-          console.log(responseData);
           // 同意处理状态码
           switch (responseData.statusCode) {
             case StatusCode.SUCCESS:
@@ -100,6 +100,18 @@ export const API = {
    */
   getUserInfo: (): Promise<User> => {
     return API.easyGet<User>(API.INFO.getUserInfo);
+  },
+
+
+  ///////////////////////////////////////////////////////////////
+  ////////// 管理相关
+  ///////////////////////////////////////////////////////////////
+  /**
+   * 创建博客
+   * @param createPostParam
+   */
+  createPost(createPostParam: CreatePostParam) {
+    return API.eastPost(API.INFO.createPost, createPostParam);
   }
 
 };
