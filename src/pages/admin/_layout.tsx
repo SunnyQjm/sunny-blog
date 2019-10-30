@@ -11,11 +11,13 @@ import RouterTypes from "umi/routerTypes";
 import withRouter from 'umi/withRouter';
 import {SelectParam} from "antd/es/menu";
 import router from 'umi/router';
+import { connect } from 'dva';
+import {User} from "@/data/user";
 
 const {Header, Content, Footer, Sider} = Layout;
 
 interface AdminLayoutProps extends RouterTypes {
-
+  user: User,
 }
 
 interface AdminLayoutState {
@@ -50,9 +52,14 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
     const {
       collapsed
     } = this.state;
+    const {
+      user
+    } = this.props;
     const menu = (
       <Menu>
-        <Menu.Item>退出登录</Menu.Item>
+        <Menu.Item onClick={() => {
+          router.replace('/login')
+        }}>退出登录</Menu.Item>
       </Menu>
     );
 
@@ -89,7 +96,6 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
         <Layout style={{marginLeft: collapsed ? 80 : 200}}>
           <Header
             className='admin-layout__header'
-            // style={{width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 200px)'}}
           >
             <Dropdown overlay={menu}>
               <a>
@@ -97,9 +103,8 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
                   className='admin-layout__header_avatar'
                   src='https://avatars2.githubusercontent.com/u/29176413?s=400&u=f78127887499acf06545f9cbe298ce388201dfed&v=4'
                 />
-                <span className='admin-layout__header_username'>SunnyQjm</span>
+                <span className='admin-layout__header_username'>{user && user.username}</span>
               </a>
-
             </Dropdown>
           </Header>
           <Content className='admin-layout__content'>
@@ -112,4 +117,10 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
   }
 }
 
-export default withRouter(AdminLayout);
+function mapStateToProps(state: any) {
+  return {
+    user: state.admin.user
+  };
+}
+
+export default connect(mapStateToProps)(withRouter(AdminLayout));

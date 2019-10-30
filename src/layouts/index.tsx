@@ -5,6 +5,8 @@ import {
   NavBarComponent
 } from '../components';
 import RouterTypes from "umi/routerTypes";
+import {LocalStorageKeys, LocalStorageManager} from "@/manager/storage.manager";
+import { connect } from 'dva';
 
 const menu = [
   {
@@ -26,7 +28,7 @@ const menu = [
 
 
 interface BasicLayoutProps extends RouterTypes {
-
+  dispatch: any
 }
 
 interface BasicLayoutState {
@@ -38,6 +40,13 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     super(props);
   }
 
+  componentDidMount(): void {
+    console.log('global layout mount');
+    this.props.dispatch({
+      type: 'admin/init'
+    });
+  }
+
   componentDidUpdate(prevProps: any) {
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
@@ -45,7 +54,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   }
 
   render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-    if (this.props.location.pathname.startsWith('/admin')) {
+    if (this.props.location.pathname.startsWith('/admin') || this.props.location.pathname.startsWith('/login')) {
       return (
         <div>
           {this.props.children}
@@ -71,4 +80,8 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   }
 }
 
-export default withRouter(BasicLayout);
+function mapStateToProps(state: any) {
+  return state;
+}
+
+export default connect(mapStateToProps)(withRouter(BasicLayout));
