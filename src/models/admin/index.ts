@@ -16,11 +16,26 @@ export default {
     user: null,
   },
   reducers: {
+    /**
+     * 更新用户信息
+     * @param state
+     * @param action
+     */
     updateUser(state: any, action: Action<User>) {
-      console.log('fuck?', action);
       return {
         ...state,
         user: action.data
+      }
+    },
+
+    /**
+     * 退出登录
+     */
+    logout(state: any, action: Action<any>) {
+      LocalStorageManager.clear();
+      return {
+        ...state,
+        user: null
       }
     }
   },
@@ -35,7 +50,6 @@ export default {
       } else {      // 没有登录则跳转到登录页
         router.replace('/login');
       }
-      yield console.log('init');
     },
     * login(action: Action<any>, operators: Operators) {
       const result: User = yield operators.call(API.login, action.data.username, action.data.password);

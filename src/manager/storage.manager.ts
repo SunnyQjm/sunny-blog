@@ -18,5 +18,8 @@ export const LocalStorageManager = {
       return JSON.parse(result);
     }
     return null;
+  },
+  clear() {
+    localStorage.clear();
   }
 };

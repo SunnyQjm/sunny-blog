@@ -18,6 +18,7 @@ const {Header, Content, Footer, Sider} = Layout;
 
 interface AdminLayoutProps extends RouterTypes {
   user: User,
+  dispatch: any,
 }
 
 interface AdminLayoutState {
@@ -58,11 +59,13 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
     const menu = (
       <Menu>
         <Menu.Item onClick={() => {
-          router.replace('/login')
+          this.props.dispatch({
+            'type': 'admin/logout'
+          });
+          router.replace('/login');
         }}>退出登录</Menu.Item>
       </Menu>
     );
-
     return (
       <Layout className='admin-layout'>
         <Sider
@@ -101,7 +104,7 @@ class AdminLayout extends React.Component<AdminLayoutProps, AdminLayoutState> {
               <a>
                 <Avatar
                   className='admin-layout__header_avatar'
-                  src='https://avatars2.githubusercontent.com/u/29176413?s=400&u=f78127887499acf06545f9cbe298ce388201dfed&v=4'
+                  src={(user && user.avatar) ? user.avatar : ''}
                 />
                 <span className='admin-layout__header_username'>{user && user.username}</span>
               </a>
