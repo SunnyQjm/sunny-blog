@@ -3,14 +3,19 @@ import {BaseResponseBody} from "@/data/interface/response.interface";
 import {StatusCode} from "@/data/network/status-code";
 import {User} from "@/data/user";
 import router from "umi/router";
-import {CreatePostParam} from "@/data/param/request.param";
+import {CreatePostParam, DelPostParam, GetPostsParam} from "@/data/param/request.param";
+import {message} from "antd";
 
 export const API = {
   INFO: {
+    DEFAULT_PAGE_SIZE: 10,
+
     login: '/login',
     register: '/register',
     getUserInfo: '/admin/getUserInfo',
     createPost: '/admin/create-post',
+    delPost: 'admin/del-post',
+    getPosts: '/post/list',
   },
   global: {
     token: ''
@@ -58,12 +63,14 @@ export const API = {
             case StatusCode.NEED_ADMIN_PERMISSION:
             case StatusCode.COMMENT_ERROR:
             case StatusCode.NEED_LOGIN:
+              message.error(responseData.message);
               break;
             case StatusCode.UN_AUTHORIZED:
+              message.warning('请先登录');
               router.replace('/login');
               break;
           }
-          if(responseData.statusCode === StatusCode.SUCCESS) {
+          if (responseData.statusCode === StatusCode.SUCCESS) {
             return responseData.data;
           } else {
             return Promise.reject(responseData);
@@ -112,7 +119,22 @@ export const API = {
    */
   createPost(createPostParam: CreatePostParam) {
     return API.eastPost(API.INFO.createPost, createPostParam);
-  }
+  },
 
+  /**
+   * 获取博文列表
+   * @param getPostsParam
+   */
+  getPosts(getPostsParam: GetPostsParam) {
+    return API.easyGet(API.INFO.getPosts, getPostsParam);
+  },
+
+  /**
+   * 删除博文
+   * @param delPostParam
+   */
+  delPost(delPostParam: DelPostParam) {
+    return API.eastPost(API.INFO.delPost, delPostParam);
+  }
 };
 

@@ -4,17 +4,14 @@ import {User} from "@/data/user";
 import router from 'umi/router';
 import {message} from 'antd'
 import {LocalStorageKeys, LocalStorageManager} from "@/manager/storage.manager";
-import {CreatePostParam} from "@/data/param/request.param";
-
-export interface AdminModelState {
-  user: User,
-  loginIng: boolean
-}
+import {CreatePostParam, DelPostParam, GetPostsParam} from "@/data/param/request.param";
+import {Post} from "@/data/post";
 
 export default {
   namespace: 'admin',
   state: {
     user: null,
+    posts: [],
   },
   reducers: {
     /**
@@ -23,7 +20,7 @@ export default {
      * @param action
      */
     updateUser(state: any, action: Action<User>) {
-      if(action.data && action.data.access_token) {
+      if (action.data && action.data.access_token) {
         API.global.token = action.data.access_token;
       }
       return {
@@ -41,12 +38,14 @@ export default {
         ...state,
         user: null
       }
-    }
+    },
+
+
   },
   effects: {
     * init(action: Action<any>, operators: Operators) {
       const user = yield LocalStorageManager.getObj(LocalStorageKeys.USER);
-      if(user) {
+      if (user) {
         yield operators.put({
           type: 'updateUser',
           data: user
@@ -79,8 +78,8 @@ export default {
 
     * createPost(action: Action<CreatePostParam>, operators: Operators) {
       yield operators.call(API.createPost, action.data);
-      message.info('发表成功');
-    }
+      message.success('发表成功');
+    },
   }
 }
 

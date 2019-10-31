@@ -15,6 +15,37 @@ interface EditableTagGroupComponentState {
   inputValue: string
 }
 
+const colors = [
+  'magenta',
+  'red',
+  'volcano',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'geekblue',
+  'purple'
+];
+
+function getHashCode(str: string, caseSensitive: boolean = false) {
+  if (!caseSensitive) {
+    str = str.toLowerCase();
+  }
+  // 1315423911=b'1001110011001111100011010100111'
+  let hash = 1315423911, i, ch;
+  for (i = str.length - 1; i >= 0; i--) {
+    ch = str.charCodeAt(i);
+    hash ^= ((hash << 5) + ch + (hash >> 2));
+  }
+  return (hash & 0x7FFFFFFF);
+}
+
+function getRandColor(tag: string) {
+  return colors[getHashCode(tag) % colors.length];
+}
+
 /**
  * 可编辑，带动画的标签组
  */
@@ -87,6 +118,7 @@ class EditableTagGroupComponent extends React.Component<EditableTagGroupComponen
           e.preventDefault();
           this.handleClose(tag);
         }}
+        color={getRandColor(tag)}
       >
         {tag}
       </Tag>
